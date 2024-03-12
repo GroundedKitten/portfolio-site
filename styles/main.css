@@ -1,0 +1,599 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 100%;
+  height: auto;
+  display: flex;
+  background: #f0f4f8; /* fallback */
+  position: fixed;
+  z-index: -3;
+}
+
+picture img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: bottom right;
+}
+
+picture.rain-on-bg-state img {
+  filter: brightness(25%) blur(2px) contrast(90%);
+  transform: scale(1.01);
+  opacity: 1;
+  transition: filter 1.5s ease, opacity 1.5s ease, transform 1.5s ease;
+}
+
+picture.rain-off-bg-state img {
+  filter: brightness(100%) blur(0px) contrast(100%);
+  transform: scale(1);
+  opacity: 0.99; /* Slightly less than 1 to ensure a transition occurs */
+  transition: filter 1.5s ease, opacity 1.5s ease, transform 1.5s ease;
+}
+
+/* Rain overlay adapted from ch. 104 of Ahmed Sadek's CSS Animations course: */
+/* https://www.udemy.com/course/css-animation-transitions-and-transforms-creativity-course */
+/* Mods: Replaced/created new overlay img. Switched to responsive units with flex design */
+.rain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  background-image: url("/images/drizzle_overlay.png");
+  animation-name: simulated-rain-overlay;
+  animation-duration: 0.3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running; /* Defined explicitly for js calls */
+  z-index: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* Animation for the rain overlay */
+@keyframes simulated-rain-overlay {
+  0% {
+    background-position: 0rem 0rem;
+  }
+
+  100% {
+    background-position: 5.4rem 15rem;
+  }
+}
+
+/* Overlay subclasses for site option toggle */
+.rain-on-overlay-state {
+  opacity: 0.8;
+  mix-blend-mode: plus-darker;
+  transition: opacity 1.5s ease;
+}
+
+.rain-off-overlay-state {
+  opacity: 0.2;
+  mix-blend-mode: plus-lighter;
+  transition: opacity 1.5s ease;
+}
+
+/* Site Options styles */
+.site-options-container {
+  position: fixed;
+  top: 40px;
+  right: 0;
+  height: 100vh;
+  width: auto;
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+  justify-items: flex-start;
+  padding: 1rem;
+  background-color: transparent;
+  z-index: 10;
+}
+
+.rain-toggle-placeholder {
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  text-shadow: 0 0.0625rem 0 rgba(74, 75, 80, 0.6),
+    0 0.125rem 0 rgba(62, 63, 71, 0.5),
+    0 0.25rem 0.1875rem rgba(12, 19, 34, 0.4),
+    0 0.5rem 0.8125rem rgba(10, 15, 25, 0.25),
+    0 0.75rem 1rem rgba(15, 21, 35, 0.25),
+    0 1rem 1.125rem rgba(28, 34, 47, 0.25),
+    0 1.125rem 1.4375rem rgba(40, 48, 60, 0.15),
+    -0.325rem 0.175rem 0.3125rem rgba(0, 0, 0, 0.05),
+    -0.025rem -0.025rem 0.0125rem rgba(236, 236, 236, 0.5);
+  background-color: transparent;
+  animation-duration: 5s;
+  transition-timing-function: ease-in-out;
+  animation-name: appear-softly;
+  animation-fill-mode: backwards;
+  animation-iteration-count: 1;
+  transform-origin: center bottom;
+  transform: perspective(370px) translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  opacity: 0.7;
+}
+
+@keyframes appear-softly {
+  0% {
+    transform-origin: center bottom;
+    transform: perspective(370px) translate3d(-5px, 15px, -60px);
+    transform-style: preserve-3d;
+    transform: scale(0);
+    opacity: 0;
+    filter: brightness(5%) blur(1px);
+    mix-blend-mode: plus-darker;
+  }
+  100% {
+    transform-origin: center bottom;
+    transform: perspective(370px) translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+    transform: scale(1);
+    filter: brightness(75%) blur(0.3px);
+    opacity: 0.7;
+    mix-blend-mode: plus-lighter;
+  }
+}
+
+.rain-on-button-state {
+  filter: brightness(75%) blur(0.3px);
+  opacity: 0.7;
+  mix-blend-mode: plus-darker;
+  transition: opacity 1.5s ease;
+}
+
+.rain-off-button-state {
+  filter: brightness(95%) blur(0.2px);
+  opacity: 0.7;
+  mix-blend-mode: plus-lighter;
+  transition: opacity 1.5s ease;
+}
+
+/* Main content container */
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 80vw;
+  height: 80vh;
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.content-text h2 {
+  font-family: "Ysabeau SC", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+.content-text h3 {
+  font-family: "Ysabeau Infant", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1rem;
+  color: #f0f0f0;
+}
+
+/* Main text */
+.content-text p {
+  font-family: "Ysabeau", sans-serif;
+  color: #f0f0f0;
+  font-size: 1;
+  text-align: left;
+}
+
+/* Bg for non-home pages */
+.alt-bg-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+
+  background: rgba(255, 255, 255, 0.1);
+  background-image: conic-gradient(
+      from 270deg at -30vw 100vh,
+      rgba(65, 114, 122, 0.9) 15deg,
+      rgba(245, 245, 227, 0.4) 30deg,
+      rgba(240, 240, 208, 0.5) 45deg,
+      rgba(240, 208, 210, 0.5) 60deg,
+      rgba(88, 109, 133, 0.9) 75deg,
+      rgba(19, 37, 54, 0.5) 90deg,
+      rgba(36, 51, 65, 0.7) 70deg,
+      rgba(22, 44, 65, 0.9) 80deg,
+      rgba(21, 34, 41, 0.8) 80deg,
+      rgba(7, 32, 49, 1) 90deg,
+      rgba(26, 46, 65, 0.9) 90deg,
+      rgba(27, 52, 64, 0.8) 100deg,
+      rgba(0, 17, 24, 0.9) 150deg,
+      rgba(0, 0, 0, 1) 180deg
+    ),
+    conic-gradient(
+      from 51deg at 0% 0%,
+      #14263552 0%,
+      #01070ea6 75%,
+      #d0e2f16b 100%,
+      #02050cfc 100%
+    ),
+    radial-gradient(
+      100% 91% at -25% -2%,
+      #f2eedff2 0%,
+      #b4a95ac9 8%,
+      #e8d69585 16%,
+      #e8e2b300 32%
+    ),
+    radial-gradient(
+      100% 91% at 1% 8%,
+      #ee9c9c8c 0%,
+      #e9a7a766 8%,
+      #ee9c9c2e 17%,
+      #ee9c9c17 28%
+    ),
+    conic-gradient(
+      from 230deg at 0% 0%,
+      #000308ff 0%,
+      #00030869 19%,
+      #000204e3 51%,
+      #071a3aff 53%,
+      #00030842 90%,
+      #14263500 98%
+    ),
+    conic-gradient(
+      from 280deg at -4% 3%,
+      #3a4657ff 67%,
+      #d7e0eeff 89%,
+      #010307ff 98%
+    );
+}
+
+/* Misty, dawn-inspired text animation for Home page splash */
+/* Amalgamation of various Pens, Udemy examples, research, testing/tweaking */
+/* Chat assistance to develop gradient/glow effects, which I then substantially modified */
+.entry-text-container {
+  position: fixed;
+  top: 27vh;
+  right: 9vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  padding: 1rem;
+  background-color: transparent;
+  color: transparent;
+  z-index: 2;
+}
+
+span {
+  font-family: "Babylonica Regular", "Satisfy Regular", papyrus, fantasy;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+  letter-spacing: 0.1rem;
+  word-spacing: 0.4rem;
+  animation: misty-text 4s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+}
+
+/* Credit and inspo from Temani Afif's cubic-bezier tutorial: */
+/* https://css-tricks.com/advanced-css-animation-using-cubic-bezier/ */
+/* Chat assistance to create the inner/mid/outer glow effects, which I then */
+/* modified substantially to fit with a dawn sunrise theme */
+@keyframes misty-text {
+  0% {
+    transform: translate(-50vw, -100vh) rotate(-40deg) skewX(70deg) scale(1.5);
+    color: #232628;
+    text-shadow: 0 0 0rem #c2b8a3, 0 0 0.6rem #19334d, 0 0 1.2rem #254d74,
+      0 0 2.4rem #e7d1ac;
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(0, 0) rotate(0deg) skewX(0deg) scale(1);
+    color: #1b1b01;
+    text-shadow: 0 0 0.1rem #c9bb9c, 0 0 0.4rem #e4c581, 0 0 0.8rem #c6a953,
+      0 0 1.2rem #949db8;
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(0, 10vh) rotate(360deg) skewX(0deg) scale(1);
+    color: #372d07;
+    text-shadow: 0 0 0.2rem #c6a953, 0 0 0.2rem #476685, 0 0 0.4rem #be9bb2,
+      0 0 0.8rem #668099;
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(0, 0) rotate(0deg) skewX(0deg) scale(1);
+    color: #e6ac00;
+    text-shadow: 0 0 0.3rem #e2b736, 0 0 0.4rem #d1894a, 0 0 0.8rem #b78089,
+      0 0 1.6rem #564766;
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) skewX(0deg) scale(1);
+    color: #fff8ab;
+    text-shadow: 0 0 0.4rem #fb8f42, 0 0 0.5rem #e8859c, 0 0 1rem #89c9e9,
+      0 0 2rem #fb87ce;
+    opacity: 0.95;
+  }
+}
+
+span:nth-child(1) {
+  animation-delay: 2.8s;
+}
+
+span:nth-child(2) {
+  animation-delay: 2.9s;
+}
+
+span:nth-child(3) {
+  animation-delay: 3s;
+}
+
+span:nth-child(4) {
+  animation-delay: 3.1s;
+}
+
+span:nth-child(5) {
+  animation-delay: 3.2s;
+}
+
+span:nth-child(6) {
+  animation-delay: 3.3s;
+}
+
+span:nth-child(7) {
+  animation-delay: 3.4s;
+}
+
+span:nth-child(8) {
+  animation-delay: 3.5s;
+}
+
+span:nth-child(9) {
+  animation-delay: 3.6s;
+}
+
+span:nth-child(10) {
+  animation-delay: 3.7s;
+}
+
+span:nth-child(11) {
+  animation-delay: 3.8s;
+}
+
+span:nth-child(12) {
+  animation-delay: 3.9s;
+}
+
+span:nth-child(13) {
+  animation-delay: 4s;
+}
+
+span:nth-child(14) {
+  animation-delay: 4.1s;
+}
+
+span:nth-child(15) {
+  animation-delay: 4.2s;
+}
+
+span:nth-child(16) {
+  animation-delay: 4.3s;
+}
+
+span:nth-child(17) {
+  animation-delay: 4.4s;
+}
+
+span:nth-child(18) {
+  animation-delay: 4.5s;
+}
+
+span:nth-child(19) {
+  animation-delay: 4.6s;
+}
+
+span:nth-child(20) {
+  animation-delay: 4.7s;
+}
+
+span:nth-child(21) {
+  animation-delay: 4.8s;
+}
+
+.contact-container {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  height: 2.4rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  padding: 1.5rem;
+  background-color: transparent;
+}
+
+.contact-list {
+  list-style: none;
+}
+
+.contact-item {
+  display: block;
+  padding: 0.5rem 0.3rem;
+}
+
+/* Navbar text */
+.contact-item a {
+  font-family: "Ysabeau", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+.contact-item a {
+  padding: 0.3rem 1.1rem;
+  background: transparent;
+  transition: 0.2s;
+}
+
+.contact-item a:hover {
+  color: rgba(61, 203, 222, 0.8);
+  text-shadow: 0 0 0.1rem #17282f, 0 0 0.2rem #21323a, 0 0 0.3rem #325564,
+    0 0 0.4rem #639ab2, 0 0 0.5rergb (149, 192, 210) ff;
+}
+
+/* Nav menu styles */
+/* Glow effect adapted from Ahmed Sadek's "Animated border neon light button effect," section 134 */
+/* of course https://www.udemy.com/course/css-animation-transitions-and-transforms-creativity-course */
+.nav-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 2.4rem;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+/* Navbar text */
+.nav-item a {
+  font-family: "Ysabeau Office", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 0.03rem;
+  color: #f0f0f0;
+}
+
+.nav-list {
+  list-style: none;
+}
+
+.nav-item {
+  display: inline-block;
+  padding: 0.3rem 0.5rem;
+}
+
+.nav-item a {
+  padding: 0.3rem 1.1rem;
+  background: transparent;
+  border-radius: 0.1rem;
+  border: 0.07rem outset rgba(61, 103, 130, 0.8);
+  transition: 0.3s;
+  /* -webkit-box-reflect: below 0.0625rem linear-gradient(transparent, #0005); */
+}
+
+.nav-item a:hover {
+  border-radius: 0.1rem;
+  border: 0.07rem inset #544c2f;
+  box-shadow: none;
+}
+
+.nav-item a.active {
+  background: transparent;
+  border-radius: 0.1rem;
+  border: none;
+  box-shadow: none;
+}
+
+.nav-item a.active:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Adjusting placement/size of menu for small screens */
+@media (max-width: 480px) {
+  .nav-container {
+    width: 100%;
+    height: 100%;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .nav-item a {
+    padding: 0.1rem 0.2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.01rem;
+    line-height: 1.1rem;
+  }
+}
+
+/* Switch to vertical menu for portrait orientations */
+@media (orientation: portrait) {
+  .nav-container {
+    width: 100%;
+    height: 100%;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .nav-item a {
+    padding: 0.1rem 0.2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.01rem;
+    line-height: 1.1rem;
+  }
+}
+
+.neon-text-container {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  min-height: 4ch;
+}
+
+.neon-text-container h2 {
+  font-family: "Ysabeau SC", sans-serif;
+  position: relative;
+  font-size: 2.5em;
+  color: #f0f0f0;
+  overflow: hidden;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 0.1rem #00b3ff, 0 0 0.2rem #00b3ff, 0 0 0.3rem #00b3ff,
+    0 0 0.4rem #00b3ff, 0 0 0.5rem #00b3ff;
+  width: 0;
+  white-space: nowrap;
+  animation: neon-text-reveal 3s steps(14, end) forwards;
+}
+
+@keyframes neon-text-reveal {
+  from {
+    width: 0; /* Start with zero width */
+  }
+  to {
+    width: 100%; /* End with full width */
+  }
+}
+
+.neon-text-container h2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 120%;
+  height: 100%;
+  animation: neon-text-reveal 7s linear infinite;
+}

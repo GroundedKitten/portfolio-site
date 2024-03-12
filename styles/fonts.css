@@ -1,0 +1,39 @@
+/* Display font */
+@font-face {
+  font-family: "Babylonica Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/babylonica/babylonica-regular.woff2") format("woff2"),
+    url("/fonts/babylonica/babylonica-regular.woff") format("woff"),
+    url("/fonts/babylonica/babylonica-regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Satisfy Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/satisfy/satisfy-regular.woff2") format("woff2"),
+    url("/fonts/satisfy/satisfy-regular.woff") format("woff"),
+    url("/fonts/satisfy/satisfy-regular.otf") format("opentype");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,1..1000;1,1..1000&family=Ysabeau+Office:ital,wght@0,1..1000;1,1..1000&family=Ysabeau+SC:wght@1..1000&family=Ysabeau:ital,wght@0,1..1000;1,1..1000&display=swap");
+
+/* Sans, with some unique character */
+.ysabeau-regular {
+  font-family: "Ysabeau", sans-serif;
+}
+
+/* More informal style */
+.ysabeau-informal {
+  font-family: "Ysabeau Infant", sans-serif;
+}
+
+/* Similar to the main variant but drops a bit of flair */
+.ysabeau-office {
+  font-family: "Ysabeau Office", sans-serif;
+}
+
+.ysabeau-display {
+  font-family: "Ysabeau SC", sans-serif;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GroundedKitten's Portfolio Site</title>
+
+    <link rel="stylesheet" href="/js/fonts.css" type="text/css" media="all" />
+    <link
+      rel="stylesheet"
+      href="/styles/main.css"
+      type="text/css"
+      media="all"
+    />
+  </head>
+
+  <body>
+    <!-- Various bg sources ordered in mobile-first approach to redue load time -->
+    <picture class="rain-on-bg-state">
+      <!-- Source for portrait mode for small to midsize devices -->
+      <source
+        srcset="/images/bg_M_portrait_dark.png"
+        media="(min-width: 481px) and (max-width: 540px) and (orientation: portrait)"
+        type="image/png"
+      />
+      <!-- Source for landscape mode for phones and small devices -->
+      <source
+        srcset="/images/bg_S_landscape_dark.png"
+        media="(max-width: 540px) and (orientation: landscape)"
+        type="image/png"
+      />
+      <!-- Source for portrait mode for tablets and similar midsize devices -->
+      <source
+        srcset="/images/bg_L_portrait_dark.png"
+        media="(min-width: 541px) and (max-width: 724px) and (orientation: portrait)"
+        type="image/png"
+      />
+      <!-- Source for landscape mode for tablets and similar midsize devices -->
+      <source
+        srcset="/images/bg_M_landscape_dark.png"
+        media="(min-width: 541px) and (max-width: 724px) and (orientation: landscape)"
+        type="image/png"
+      />
+      <!-- Source for portrait mode for convertible laptops with tablet mode -->
+      <source
+        srcset="/images/bg_XL_portrait_dark.png"
+        media="(min-width: 725px) and (max-width: 1080px) and (orientation: portrait)"
+        type="image/png"
+      />
+      <!-- Source for extra-small devices irrespective of orientation -->
+      <source
+        srcset="/images/bg_S_portrait_dark.png"
+        media="(max-width: 480px)"
+        type="image/png"
+      />
+      <!-- Source for small devices irrespective of orientation -->
+      <source
+        srcset="/images/bg_S_dark.png"
+        media="(min-width: 481px) and (max-width: 540px)"
+        type="image/png"
+      />
+      <!-- Source for midsize devices irrespective of orientation -->
+      <source
+        srcset="/images/bg_M_dark.png"
+        media="(min-width: 541px) and (max-width: 786px)"
+        type="image/png"
+      />
+      <!-- Source for large devices irrespective of orientation -->
+      <source
+        srcset="/images/bg_L_dark.png"
+        media="(min-width: 787px) and (max-width: 1366px)"
+        type="image/png"
+      />
+      <!-- Source for extra-large devices irrespective of orientation -->
+      <source
+        srcset="/images/bg_XL_dark.png"
+        media="(min-width: 1367px)"
+        type="image/png"
+      />
+      <!-- Fallback image -->
+      <img
+        src="/images/bg_S_portrait_dark.png"
+        alt="Dark-theme background image for GroundedKitten's portfolio website"
+      />
+    </picture>
+
+    <!-- Simulated rain overlay of the body's bg img -->
+    <div class="rain-overlay rain-on-overlay-state"></div>
+
+    <!-- Begin main content -->
+    <div class="content-container">
+      <!-- Site tagline entry -->
+      <div class="entry-text-container">
+        <span>P</span>
+        <span>r</span>
+        <span>e</span>
+        <span>s</span>
+        <span>e</span>
+        <span>n</span>
+        <span>t</span>
+        <span>&nbsp;</span>
+        <span>a</span>
+        <span>n</span>
+        <span>d</span>
+        <span>&nbsp;</span>
+        <span>c</span>
+        <span>u</span>
+        <span>r</span>
+        <span>i</span>
+        <span>o</span>
+        <span>u</span>
+        <span>s</span>
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </div>
+
+      <!-- Main menu -->
+      <div class="nav-container">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="active">home</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html">about</a>
+          </li>
+          <li class="nav-item">
+            <a href="portfolio.html">portfolio</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html">contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Site Options bar -->
+      <div class="site-options-container">
+        <div
+          id="rain-animation-options"
+          class="rain-toggle-placeholder rain-on-button-state"
+        >
+          🌧️
+        </div>
+      </div>
+
+      <!-- End content container -->
+    </div>
+    <script src="/js/rain-toggle.js" defer></script>
+  </body>
+</html>
